@@ -46,26 +46,33 @@ class ConfigurationsFragment : Fragment() {
         if (sharedPreferences != null){
             // the file exist so we can load the preferences
             val jsonString = sharedPreferences?.getString("jsonString", null)
-            val jsonObject = JSONObject(jsonString)
-            val frontCameraIp = jsonObject.getString("front_camera_ip")
-            val apWifi = jsonObject.getString("ap_wifi")
-            val backCameraIp = jsonObject.getString("back_camera_ip")
-            val ssid = jsonObject.getString("ssid")
-            val password = jsonObject.getString("password")
+            if(jsonString!= null) {
+                val jsonObject = JSONObject(jsonString)
+                val frontCameraIp = jsonObject.getString("front_camera_ip")
+                val apWifi = jsonObject.getString("ap_wifi")
+                val backCameraIp = jsonObject.getString("back_camera_ip")
+                val ssid = jsonObject.getString("ssid")
+                val password = jsonObject.getString("password")
 
-            wifiSsidEditText.text = Editable.Factory.getInstance().newEditable(ssid)
-            wifiPasswordEditText.text = Editable.Factory.getInstance().newEditable(password)
-            frontCameraIpEditText.text = Editable.Factory.getInstance().newEditable(frontCameraIp)
-            backCameraIpEditText.text = Editable.Factory.getInstance().newEditable(backCameraIp)
+                wifiSsidEditText.text = Editable.Factory.getInstance().newEditable(ssid)
+                wifiPasswordEditText.text = Editable.Factory.getInstance().newEditable(password)
+                frontCameraIpEditText.text = Editable.Factory.getInstance().newEditable(frontCameraIp)
+                backCameraIpEditText.text = Editable.Factory.getInstance().newEditable(backCameraIp)
+            }
+
         }
 
         val connectPref = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
         if (connectPref != null){
             // the file exist so we can load the preferences
+
             val jsonStringConnect = connectPref?.getString("jsonStringConnect", null)
-            val jsonObject = JSONObject(jsonStringConnect)
-            val robotCarAddress = jsonObject.getString("address")
-            robocarText.text = Editable.Factory.getInstance().newEditable(robotCarAddress)
+            if (jsonStringConnect != null) {
+                val jsonObject = JSONObject(jsonStringConnect)
+                val robotCarAddress = jsonObject.getString("address")
+                robocarText.text = Editable.Factory.getInstance().newEditable(robotCarAddress)
+            }
+
 
         }
 

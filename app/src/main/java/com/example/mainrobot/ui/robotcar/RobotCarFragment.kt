@@ -16,7 +16,9 @@ import com.example.mainrobot.databinding.FragmentRobotcarBinding
 import com.example.mainrobot.JoystickView
 import com.example.mainrobot.RobocarViewModel
 import org.json.JSONObject
-
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
 
     private lateinit var binding: FragmentRobotcarBinding
@@ -34,6 +36,7 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("RobotCarFragment", "onCreateView")
         binding = FragmentRobotcarBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -47,8 +50,8 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
         webView.settings.userAgentString =
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36"
         webView.webChromeClient = WebChromeClient()
-        webView.loadUrl(videoUrl)
-
+//        webView.loadUrl(videoUrl)
+        launchWebView(videoUrl)
         // Initialize the TextViews
         joystickTopCoordinates = binding.joystickTopCoordinates
         joystickBottomCoordinates = binding.joystickBottomCoordinates
@@ -89,15 +92,25 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
 
         return root
     }
+    private fun launchWebView(videoUrl: String) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            Log.d("RobotCarFragment", "WebView load started")
+            webView.loadUrl(videoUrl)
+            Log.d("RobotCarFragment", "WebView load complete")
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("RobotCarFragment", "onViewCreated")
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         setJoystickPositions()
     }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
+        Log.d("RobotCarFragment", "onDestroyView")
         webView.destroy()
     }
 
@@ -172,6 +185,7 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
     }
 
     private fun setJoystickPositions() {
+        Log.d("RobotCarFragment", "setJoystickPositions")
         val layoutParamsTop = binding.joystickTop.layoutParams as ViewGroup.LayoutParams
         val layoutParamsBottom = binding.joystickBottom.layoutParams as ViewGroup.LayoutParams
 
