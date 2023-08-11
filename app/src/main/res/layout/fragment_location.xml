@@ -1,13 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.locations.LocationFragment">
+    <!-- Add a FragmentContainerView to hold the map fragment -->
 
-    <TextView
+    <!-- EditText for Latitude -->
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:liteMode="false" />
 
+    <EditText
+        android:id="@+id/editTextLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Latitude"
+        android:inputType="numberDecimal"
+        android:textColor="@android:color/black"
+        android:layout_gravity="top|left"
+        app:layout_constraintEnd_toStartOf="@+id/editTextLongitude"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- EditText for Longitude -->
+
+    <EditText
+        android:id="@+id/editTextLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:hint="Longitude"
+        android:inputType="numberDecimal"
+        android:textColor="@android:color/black"
+        android:layout_gravity="top|right"
+        app:layout_constraintEnd_toEndOf="@id/mapFragment"
+        app:layout_constraintStart_toEndOf="@+id/editTextLatitude"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Clear Button (X symbol) -->
+    <ImageButton
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:src="@drawable/ic_close_dark"
+        android:layout_gravity="top|center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </FrameLayout>

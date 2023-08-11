@@ -11,6 +11,7 @@
     <string name="menu_app_settings">App Settings</string>
     <string name="menu_camera_settings">Camera Settings</string>
     <string name="menu_robotcar">RobotCar</string>
+    <string name="menu_location">Location</string>
     <string name="menu_configurations">App Settings</string>
     <string name="menu_logout">logout</string>
     <!-- TODO: Remove or change this placeholder text -->

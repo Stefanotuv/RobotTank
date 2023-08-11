@@ -20,6 +20,10 @@
             android:id="@+id/nav_configurations"
             android:icon="@drawable/ic_menu_configurations"
             android:title="@string/menu_app_settings" />
+        <item
+            android:id="@+id/nav_location"
+            android:icon="@drawable/ic_menu_location"
+            android:title="Location" />
 
     </group>
 

@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_settings, R.id.nav_robotcar, R.id.nav_configurations
+                R.id.nav_home, R.id.nav_settings, R.id.nav_robotcar, R.id.nav_configurations, R.id.nav_location
             ), drawerLayout
         )
 
@@ -76,7 +76,14 @@ class MainActivity : AppCompatActivity() {
                     Log.d("MainActivity", "nav_robotcar")
                     navController.navigate(R.id.nav_robotcar)
                     true
-                } R.id.nav_logout -> {
+                }
+                R.id.nav_location -> {
+                    // handle click
+                    Log.d("Location", "nav_location")
+                    navController.navigate(R.id.nav_location)
+                    true
+                }
+                R.id.nav_logout -> {
                 // handle click
                 Log.d("MainActivity", "nav_logout")
                 navController.navigate(R.id.nav_logout)
