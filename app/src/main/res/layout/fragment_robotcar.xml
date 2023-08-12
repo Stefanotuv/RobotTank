@@ -104,7 +104,15 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_below="@id/textPan" />
-
+    <ImageButton
+        android:id="@+id/playRecordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_rec"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/transparent"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp" />
 </RelativeLayout>
 
 

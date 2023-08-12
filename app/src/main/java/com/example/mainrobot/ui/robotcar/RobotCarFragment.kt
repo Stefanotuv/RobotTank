@@ -19,6 +19,10 @@ import org.json.JSONObject
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import android.widget.ImageButton;
+import android.widget.Toast
+import com.example.mainrobot.R
+
 class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
 
     private lateinit var binding: FragmentRobotcarBinding
@@ -30,7 +34,8 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
 
     private val apiClient = ApiClient()
     private val addressRobotCar = "http://192.168.2.45/api"
-
+    private lateinit var playRecordButton: ImageButton
+    private var isRecording = false // Track recording state
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +71,23 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
             }
             Log.d("RobotCarFragment", "Switch value changed: $isChecked")
             webView.loadUrl(videoUrl) // Update the video URL in the WebView
+        }
+
+        playRecordButton = binding.playRecordButton
+
+        playRecordButton.setOnClickListener {
+            if (isRecording) {
+                // Stop recording
+                Toast.makeText(requireContext(), "Recording Stopped", Toast.LENGTH_SHORT).show()
+                playRecordButton.setImageResource(R.drawable.ic_rec)
+                // Perform stop recording functionality
+            } else {
+                // Start recording
+                Toast.makeText(requireContext(), "Start Recording", Toast.LENGTH_SHORT).show()
+                playRecordButton.setImageResource(R.drawable.ic_stop)
+                // Perform start recording functionality
+            }
+            isRecording = !isRecording // Toggle recording state
         }
 
 
@@ -121,6 +143,8 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
     override fun onJoystickReleased() {
         // Not used for individual joysticks
     }
+
+
 
     private var lastPostTime: Long = 0
     private val postThrottleInterval: Long = 250 // Throttle interval in milliseconds
