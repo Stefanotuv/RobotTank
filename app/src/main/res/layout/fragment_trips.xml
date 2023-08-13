@@ -12,4 +12,8 @@
         android:background="@android:color/transparent"
         android:padding="16dp" />
     <!-- Add padding to the RecyclerView -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

@@ -56,10 +56,10 @@ class RecordedTripsAdapter(private var recordedTrips: List<RecordedTrip>) :
             fragment.arguments = bundle
 
             val fragmentManager = (holder.itemView.context as AppCompatActivity).supportFragmentManager
-            fragmentManager.beginTransaction()
-                .replace(R.id.tripMapFragment, fragment) // Replace "fragment_container" with your actual container ID
-                .addToBackStack(null)
-                .commit()
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.fragmentContainer, fragment) // Replace with the actual RecyclerView ID
+            transaction.addToBackStack(null)
+            transaction.commit()
         }
     }
     override fun getItemCount(): Int {
