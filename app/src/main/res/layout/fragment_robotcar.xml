@@ -77,14 +77,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:text="Distance: N/A"
         android:textColor="#FDFCFC"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         tools:ignore="RtlSymmetry"
         android:layout_above="@id/joystick_top"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="4dp" />
 
     <TextView
         android:id="@+id/textPan"
@@ -92,8 +92,8 @@
         android:layout_height="wrap_content"
         android:text="Pan: 0°"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp" />
 
     <TextView
         android:id="@+id/textTilt"
@@ -101,18 +101,70 @@
         android:layout_height="wrap_content"
         android:text="Tilt: 0°"
         android:textColor="#FFFFFF"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="4dp"
         android:layout_below="@id/textPan" />
+
     <ImageButton
         android:id="@+id/playRecordButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_rec"
-        android:layout_alignParentStart="true"
-        android:background="@android:color/transparent"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp" />
+        android:layout_alignParentEnd="true"
+    android:layout_alignParentTop="true"
+    android:layout_margin="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
+    android:background="@android:color/transparent"
+    android:src="@drawable/ic_rec" />
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/connectButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:src="@drawable/ic_connected"-->
+<!--        />-->
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/connectButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/playRecordButton"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:src="@drawable/ic_connected" />-->
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/playRecordButton"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/connectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/connected" />
+
+        <!-- Other buttons can be added here if needed -->
+    </LinearLayout>
+
 </RelativeLayout>
 
 

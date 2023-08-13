@@ -22,6 +22,8 @@ import kotlinx.coroutines.launch
 import android.widget.ImageButton;
 import android.widget.Toast
 import com.example.mainrobot.R
+import java.util.Timer
+import java.util.TimerTask
 
 class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
 
@@ -29,13 +31,18 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
     private lateinit var webView: WebView
     private lateinit var joystickTopCoordinates: TextView
     private lateinit var joystickBottomCoordinates: TextView
+    private lateinit var distance: TextView
+
     private lateinit var switchButton: Switch
     private var videoUrl = "http://192.168.2.186:81/stream" // Replace with your IP camera video URL
 
     private val apiClient = ApiClient()
-    private val addressRobotCar = "http://192.168.2.45/api"
+    private val addressRobotCar = "http://192.168.2.46/api"
     private lateinit var playRecordButton: ImageButton
+    private lateinit var connectButton: ImageButton
     private var isRecording = false // Track recording state
+    private var iSConnected = false // Track recording state
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -73,8 +80,8 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
             webView.loadUrl(videoUrl) // Update the video URL in the WebView
         }
 
+        // Initialize the playRecordButton
         playRecordButton = binding.playRecordButton
-
         playRecordButton.setOnClickListener {
             if (isRecording) {
                 // Stop recording
@@ -90,6 +97,25 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
             isRecording = !isRecording // Toggle recording state
         }
 
+        // Initialize the connectButton
+        connectButton = binding.connectButton
+        connectButton.setOnClickListener {
+            if (iSConnected) {
+                // Disconnect
+                Toast.makeText(requireContext(), "disconnecting", Toast.LENGTH_SHORT).show()
+                connectButton.setImageResource(R.drawable.disconnected)
+
+
+
+                // Perform stop recording functionality
+            } else {
+                // Start recording
+                Toast.makeText(requireContext(), "connecting", Toast.LENGTH_SHORT).show()
+                connectButton.setImageResource(R.drawable.connected)
+                // Perform start recording functionality
+            }
+            iSConnected = !iSConnected // Toggle recording state
+        }
 
         // Initialize the JoystickViews
         binding.joystickTop.setJoystickListener(object : JoystickView.JoystickListener {
@@ -112,6 +138,18 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
             }
         })
 
+        // Initialize the distance
+        distance = binding.textDistance
+        fetchDistanceFromServer()
+        // Use a Timer or any other mechanism to periodically update the distance
+        val updateIntervalMillis = 5000 // Update every 5 seconds, you can adjust this interval
+        val timer = Timer()
+        timer.scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                fetchDistanceFromServer()
+            }
+        }, updateIntervalMillis.toLong(), updateIntervalMillis.toLong())
+
         return root
     }
     private fun launchWebView(videoUrl: String) {
@@ -122,6 +160,23 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
         }
     }
 
+    private fun fetchDistanceFromServer() {
+        val apiUrl = "http://192.168.2.46/api/distance" // Replace with your actual API endpoint for distance retrieval
+
+        apiClient.sendRequest(apiUrl, "GET") { response ->
+            try {
+                val jsonResponse = JSONObject(response)
+                val distanceValue = jsonResponse.optDouble("distance", 0.0)
+                val formattedDistance = String.format("%.2f", distanceValue)
+
+                activity?.runOnUiThread {
+                    distance.text = "Distance: $formattedDistance" // Update the distance TextView
+                }
+            } catch (e: Exception) {
+                Log.e("RobotCarFragment", "Error parsing distance JSON: ${e.message}")
+            }
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d("RobotCarFragment", "onViewCreated")
@@ -143,8 +198,6 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
     override fun onJoystickReleased() {
         // Not used for individual joysticks
     }
-
-
 
     private var lastPostTime: Long = 0
     private val postThrottleInterval: Long = 250 // Throttle interval in milliseconds
@@ -197,8 +250,6 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
 
         Log.d("RobotCarFragment", "Request POST sent: joypad=$joypad, scaledX=0, scaledY=0")
     }
-
-
 
     private fun scaleCoordinate(x: Float, y: Float): Pair<Float, Float> {
         val angle = Math.atan2(y.toDouble(), x.toDouble()).toFloat()
