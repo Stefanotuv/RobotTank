@@ -46,18 +46,27 @@ class ConfigurationsFragment : Fragment() {
         if (sharedPreferences != null){
             // the file exist so we can load the preferences
             val jsonString = sharedPreferences?.getString("jsonString", null)
+            Log.d("ConfigurationsFragment", "jsonString: $jsonString")
+
             if(jsonString!= null) {
                 val jsonObject = JSONObject(jsonString)
                 val frontCameraIp = jsonObject.getString("front_camera_ip")
                 val apWifi = jsonObject.getString("ap_wifi")
+                // how can i use the ap / wifi button
                 val backCameraIp = jsonObject.getString("back_camera_ip")
                 val ssid = jsonObject.getString("ssid")
                 val password = jsonObject.getString("password")
+
+                val speed = jsonObject.getString("speed")
 
                 wifiSsidEditText.text = Editable.Factory.getInstance().newEditable(ssid)
                 wifiPasswordEditText.text = Editable.Factory.getInstance().newEditable(password)
                 frontCameraIpEditText.text = Editable.Factory.getInstance().newEditable(frontCameraIp)
                 backCameraIpEditText.text = Editable.Factory.getInstance().newEditable(backCameraIp)
+                // use wifi_ap
+                // use speed
+                speedSeekBar.setProgress(speed.toInt())
+
             }
 
         }

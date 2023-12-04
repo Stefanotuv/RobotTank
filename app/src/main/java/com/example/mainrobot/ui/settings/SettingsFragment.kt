@@ -28,8 +28,8 @@ class SettingsFragment : Fragment() {
     ): View {
         val slideshowViewModel =
             ViewModelProvider(this).get(SettingsViewModel::class.java)
-        val front_camera = "http://192.168.2.186"
-        val back_camera = "http://192.168.2.235"
+        val front_camera = "http://192.168.2.186" // initial value
+        val back_camera = "http://192.168.2.235" // initial value - if the car has two cameras
 
         var videoUrl = front_camera
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)

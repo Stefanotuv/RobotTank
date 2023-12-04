@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val apiClient = ApiClient()
-    private val addressRobotCar = "http://192.168.2.45/api"
+    private val addressRobotCar = "http://192.168.1.131/api"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,28 +40,29 @@ class HomeFragment : Fragment() {
         robocarViewModel = ViewModelProvider(requireActivity()).get(RobocarViewModel::class.java)
 
         var connect_status = ""
-        val sharedConnect = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
-
-        //  check if the status is saved as connected. in that case shows the disconnect button
-        if (sharedConnect != null){
-            val jsonStringConnect = sharedConnect?.getString("jsonStringConnect", null)
-            Log.d("HomeFragment", "jsonStringConnect: $jsonStringConnect")
-            val jsonObject = jsonStringConnect?.let { JSONObject(it) }
-            if (jsonObject != null) {
-                connect_status = jsonObject.getString("connected")
-                var address = jsonObject.getString("address")
-                if (connect_status == "yes") {
-                    Log.d("HomeFragment", "connect_status: $connect_status")
-                    addressEditText.setText("$address")
-                    saveConnect.text = "disconnect"
-                }
-
-            }
-        }
+//        val sharedConnect = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
+//
+//        //  check if the status is saved as connected. in that case shows the disconnect button
+//        if (sharedConnect != null){
+//            val jsonStringConnect = sharedConnect?.getString("jsonStringConnect", null)
+//            Log.d("HomeFragment", "jsonStringConnect: $jsonStringConnect")
+//            val jsonObject = jsonStringConnect?.let { JSONObject(it) }
+//            if (jsonObject != null) {
+//                connect_status = jsonObject.getString("connected")
+//                var address = jsonObject.getString("address")
+//                if (connect_status == "yes") {
+//                    Log.d("HomeFragment", "connect_status: $connect_status")
+//                    addressEditText.setText("$address")
+//                    saveConnect.text = "disconnect"
+//                }
+//
+//            }
+//        }
 
         saveConnect.setOnClickListener {
             val address = addressEditText.text.toString()
             robocarViewModel.setRobocarAddress(address)
+
 
             // check if the file exist first to load the default values
 
@@ -87,6 +88,19 @@ class HomeFragment : Fragment() {
                             Log.d("HomeFragment", "jsonStringConnect: $jsonStringConnect")
                             Log.d("HomeFragment", "Robocar connected at: $address")
                             Toast.makeText(requireContext(), "Robocar connected successfully", Toast.LENGTH_SHORT).show()
+
+                            val connectPref = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
+                            if (connectPref != null){
+                                // the file exist so we can load the preferences
+                                val jsonStringConnect = connectPref?.getString("jsonStringConnect", null)
+                                if (jsonStringConnect != null) {
+                                    val jsonObject = JSONObject(jsonStringConnect)
+                                    val robotCarAddress = jsonObject.getString("address")
+                                    val editor = connectPref.edit()
+                                    editor.putString("jsonStringConnect", "{\"address\":\"$address\"}")
+                                    editor.apply()
+                                }
+                            }
                         } else {
                             Log.d("HomeFragment", "Robocar did not connect at: $address")
                             Toast.makeText(requireContext(), "Robocar non connected", Toast.LENGTH_SHORT).show()
