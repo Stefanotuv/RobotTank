@@ -225,6 +225,7 @@ class ConfigurationsFragment : Fragment() {
 
         }
 
+        // added to the page to allow me to do a commit that i forgot :)
         resetButton.setOnClickListener{
             // just call the API and confirm the reset
             val apiClient = ApiClient()
