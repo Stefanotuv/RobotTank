@@ -187,7 +187,7 @@ class ConfigurationsFragment : Fragment() {
             //  check if the status is saved as connected. in that case shows the disconnect button
             if (sharedConnect != null){
                 val jsonStringConnect = sharedConnect?.getString("jsonStringConnect", null)
-                Log.d("HomeFragment", "jsonStringConnect: $jsonStringConnect")
+                Log.d("ConfigurationsFragment", "jsonStringConnect: $jsonStringConnect")
                 val jsonObject = jsonStringConnect?.let { JSONObject(it) }
                 if (jsonObject != null) {
 
@@ -226,7 +226,44 @@ class ConfigurationsFragment : Fragment() {
         }
 
         resetButton.setOnClickListener{
+            // just call the API and confirm the reset
+            val apiClient = ApiClient()
+            var address = ""
+            val sharedConnect = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
+            //  check if the status is saved as connected. in that case shows the disconnect button
+            if (sharedConnect != null){
+                val jsonStringConnect = sharedConnect?.getString("jsonStringConnect", null)
+                Log.d("ConfigurationsFragment", "jsonStringConnect: $jsonStringConnect")
+                val jsonObject = jsonStringConnect?.let { JSONObject(it) }
+                if (jsonObject != null) {
 
+                    address = jsonObject.getString("address")
+
+                }
+            }
+
+
+            val address_robotcar_reset = "$address/api/settings/reset"
+            val inputData = JSONObject().apply {
+                put("reset", "reset")
+            }
+
+            apiClient.sendRequest(address_robotcar_reset, "POST",inputData) { response ->
+                // Handle the API response here
+
+                Log.d("ConfigurationsFragment", "API Response: $response")
+                activity?.runOnUiThread {
+                    if (response != "") { // answer is received
+
+                        Log.d("ConfigurationsFragment", "Reset Successful")
+                        Toast.makeText(requireContext(), "Reset Successful", Toast.LENGTH_SHORT).show()
+
+                    } else {
+                        Log.d("ConfigurationsFragment", "Reset didnt work, maybe not connected?")
+                        Toast.makeText(requireContext(), "CReset didnt work, maybe not connected?", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
         reloadButton.setOnClickListener {
