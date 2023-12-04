@@ -1,0 +1,8 @@
+The save button save the values on the Raspberry Pico and on the local memory*
+
+The reload button reload the values saved on the local memory
+
+The reset button reset the Raspberry Pico (to be used after the saving the new values)
+
+
+*If you need to reload the values from the Pico go the home page

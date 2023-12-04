@@ -239,6 +239,13 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="12dp"/>
+
     <!-- Button Layout -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -253,7 +260,14 @@
             android:text="Save"
             android:textSize="18sp"
             android:textStyle="bold" />
-
+        <Button
+            android:id="@+id/reloadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reload"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp" />
         <Button
             android:id="@+id/resetButton"
             android:layout_width="wrap_content"
@@ -261,8 +275,18 @@
             android:text="Reset"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginStart="16dp" />
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/black"/>
+
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/explanationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@raw/explanation"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
 
 </LinearLayout>

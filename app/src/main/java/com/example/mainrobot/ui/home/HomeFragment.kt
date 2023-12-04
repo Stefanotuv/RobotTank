@@ -3,6 +3,7 @@ package com.example.mainrobot.ui.home
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -40,27 +41,30 @@ class HomeFragment : Fragment() {
         robocarViewModel = ViewModelProvider(requireActivity()).get(RobocarViewModel::class.java)
 
         var connect_status = ""
-//        val sharedConnect = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
-//
-//        //  check if the status is saved as connected. in that case shows the disconnect button
-//        if (sharedConnect != null){
-//            val jsonStringConnect = sharedConnect?.getString("jsonStringConnect", null)
-//            Log.d("HomeFragment", "jsonStringConnect: $jsonStringConnect")
-//            val jsonObject = jsonStringConnect?.let { JSONObject(it) }
-//            if (jsonObject != null) {
-//                connect_status = jsonObject.getString("connected")
-//                var address = jsonObject.getString("address")
-//                if (connect_status == "yes") {
-//                    Log.d("HomeFragment", "connect_status: $connect_status")
-//                    addressEditText.setText("$address")
-//                    saveConnect.text = "disconnect"
-//                }
-//
-//            }
-//        }
+        val sharedConnect = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
+
+        //  check if the status is saved as connected. in that case shows the disconnect button
+        if (sharedConnect != null){
+            val jsonStringConnect = sharedConnect?.getString("jsonStringConnect", null)
+            Log.d("HomeFragment", "jsonStringConnect: $jsonStringConnect")
+            val jsonObject = jsonStringConnect?.let { JSONObject(it) }
+            if (jsonObject != null) {
+
+                connect_status = jsonObject.getString("connection")
+                var address = jsonObject.getString("address")
+                if (connect_status == "connected") {
+                    Log.d("HomeFragment", "connect_status: $connect_status")
+                    addressEditText.setText("$address")
+                    saveConnect.text = "disconnect"
+//                    saveConnect.text = Editable.Factory.getInstance().newEditable("disconnect")
+                }
+
+            }
+        }
 
         saveConnect.setOnClickListener {
             val address = addressEditText.text.toString()
+            val completeAddress = "$address/api/settings"
             robocarViewModel.setRobocarAddress(address)
 
 
@@ -68,7 +72,7 @@ class HomeFragment : Fragment() {
 
             if (saveConnect.text == "connect"){
 
-                apiClient.sendRequest(address, "GET") { response ->
+                apiClient.sendRequest(completeAddress, "GET") { response ->
                     // Handle the API response here
                     Log.d("RobotCarFragment", "API Response: $response")
                     activity?.runOnUiThread {
@@ -93,11 +97,13 @@ class HomeFragment : Fragment() {
                             if (connectPref != null){
                                 // the file exist so we can load the preferences
                                 val jsonStringConnect = connectPref?.getString("jsonStringConnect", null)
+
                                 if (jsonStringConnect != null) {
                                     val jsonObject = JSONObject(jsonStringConnect)
                                     val robotCarAddress = jsonObject.getString("address")
+                                    val connectionStatus = "connected"
                                     val editor = connectPref.edit()
-                                    editor.putString("jsonStringConnect", "{\"address\":\"$address\"}")
+                                    editor.putString("jsonStringConnect", "{\"address\":\"$address\", \"connection\":\"$connectionStatus\" }")
                                     editor.apply()
                                 }
                             }
@@ -133,6 +139,8 @@ class HomeFragment : Fragment() {
 
 
             else {
+                val saveConnect_text = saveConnect.text
+                Log.d("HomeFragment", "Else Value: $saveConnect_text")
 
             }
 
