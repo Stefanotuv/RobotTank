@@ -45,6 +45,8 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
     private var isRecording = false // Track recording state
     private var iSConnected = false // Track recording state
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -72,30 +74,35 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
         var frontCameraIp: String? = null
         var backCameraIp: String? = null
 
-//        val sharedPreferences = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-//        if (sharedPreferences != null){
-//            // the file exist so we can load the preferences
-//            val jsonString = sharedPreferences?.getString("jsonString", null)
-//            Log.d("ConfigurationsFragment", "jsonString: $jsonString")
-//            if(jsonString!= null) {
-//                val jsonObject = JSONObject(jsonString)
-//                frontCameraIp = jsonObject.getString("front_camera_ip")
-//                backCameraIp = jsonObject.getString("back_camera_ip")
-//
-//            }
-//        }
+        val connectPref = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
+        if (connectPref != null){
+            // the file exist so we can load the preferences
 
-//        val connectPref = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
-//        if (connectPref != null){
-//            // the file exist so we can load the preferences
-//
-//            val jsonStringConnect = connectPref?.getString("jsonStringConnect", null)
-//            if (jsonStringConnect != null) {
-//                val jsonObject = JSONObject(jsonStringConnect)
-//                val robotCarAddress = jsonObject.getString("address")
-//                addressRobotCar = "http://$robotCarAddress"
-//            }
-//        }
+            val jsonStringConnect = connectPref?.getString("jsonStringConnect", null)
+            if (jsonStringConnect != null) {
+                val jsonObject = JSONObject(jsonStringConnect)
+                val robotCarAddress = jsonObject.getString("address")
+                addressRobotCar = "http://$robotCarAddress/api"
+            }
+        }
+
+
+
+
+        val sharedPreferences = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        if (sharedPreferences != null){
+            // the file exist so we can load the preferences
+            val jsonString = sharedPreferences?.getString("jsonString", null)
+            Log.d("ConfigurationsFragment", "jsonString: $jsonString")
+            if(jsonString!= null) {
+                val jsonObject = JSONObject(jsonString)
+                frontCameraIp = jsonObject.getString("front_camera_ip")
+                backCameraIp = jsonObject.getString("back_camera_ip")
+
+            }
+        }
+
+
 
 
 
@@ -103,11 +110,11 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
         switchButton = binding.switchButton
         switchButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                videoUrl = "http://192.168.2.235:81/stream"
-//                videoUrl = frontCameraIp.toString()
+//                videoUrl = "http://192.168.2.235:81/stream"
+                videoUrl = frontCameraIp.toString()
             } else {
-                videoUrl = "http://192.168.2.235:81/stream"
-//                videoUrl = backCameraIp.toString()
+//                videoUrl = "http://192.168.2.235:81/stream"
+                videoUrl = backCameraIp.toString()
             }
             Log.d("RobotCarFragment", "Switch value changed: $isChecked")
             webView.loadUrl(videoUrl) // Update the video URL in the WebView
