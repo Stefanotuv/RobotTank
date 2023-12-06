@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/left_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/triangleUp_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_up"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+        <ImageView
+            android:id="@+id/triangleCircle_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circle"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/triangleUp_up"
+            android:layout_marginTop="2dp"/>
+        <ImageView
+            android:id="@+id/triangleDown_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_down"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/triangleCircle_up"
+            android:layout_marginTop="2dp"/>
+
+        <ImageView
+            android:id="@+id/triangleLeft_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_left"
+            android:layout_toLeftOf="@id/triangleCircle_up"
+            android:layout_below="@id/triangleUp_up"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="2dp"/>
+
+        <ImageView
+            android:id="@+id/triangleRight_up"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_right"
+            android:layout_toRightOf="@id/triangleCircle_up"
+            android:layout_below="@id/triangleUp_up"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"/>
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/bottom_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:id="@+id/triangleUp_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_up"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+        <ImageView
+            android:id="@+id/triangleCircle_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/circle"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/triangleUp_down"
+            android:layout_marginTop="2dp"/>
+        <ImageView
+            android:id="@+id/triangleDown_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_down"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/triangleCircle_down"
+            android:layout_marginTop="2dp"/>
+
+        <ImageView
+            android:id="@+id/triangleLeft_down"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_left"
+            android:layout_toLeftOf="@id/triangleCircle_down"
+            android:layout_below="@id/triangleUp_down"
+            android:layout_marginEnd="6dp"
+            android:layout_marginTop="2dp"/>
+
+        <ImageView
+            android:id="@+id/triangleRight_down"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:src="@drawable/triangle_right"
+            android:layout_toRightOf="@id/triangleCircle_down"
+            android:layout_below="@id/triangleUp_down"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="2dp"/>
+    </RelativeLayout>
+
+
+    <Switch
+        android:id="@+id/switchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Front/Back"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        style="@style/WhiteSwitchText"/>
+
+    <TextView
+        android:id="@+id/textDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:text="Distance: N/A"
+        android:textColor="#FDFCFC"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="RtlSymmetry"
+        android:layout_above="@id/joystick_top"
+        android:layout_marginBottom="4dp" />
+
+
+
+    <ImageButton
+        android:id="@+id/playRecordButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_rec" />
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/playRecordButton"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/connectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/connected" />
+
+        <!-- Other buttons can be added here if needed -->
+    </LinearLayout>
+
+</RelativeLayout>
+
+
