@@ -41,7 +41,7 @@ class RobotCarNewFragment : Fragment() {
     private lateinit var distance: TextView
 
     private lateinit var switchButton: Switch
-    private var videoUrl = "http://192.168.1.161:81/stream" // Replace with your IP camera video URL
+    private var videoUrl = "http://192.168.1.126:81/stream" // Replace with your IP camera video URL
 
     private val apiClient = ApiClient()
     private var addressRobotCar = "http://192.168.2.46/api"
@@ -50,13 +50,48 @@ class RobotCarNewFragment : Fragment() {
     private var isRecording = false // Track recording state
     private var iSConnected = false // Track recording state
 
+    private fun getViewNameFromId(viewId: Int): String {
+        return when (viewId) {
+            R.id.triangleUp_up -> "triangleUp_up"
+            R.id.triangleCircle_up -> "triangleCircle_up"
+            R.id.triangleDown_up -> "triangleDown_up"
+            R.id.triangleLeft_up -> "triangleLeft_up"
+            R.id.triangleRight_up -> "triangleRight_up"
 
+            R.id.triangleUp_down -> "triangleUp_down"
+            R.id.triangleCircle_down -> "triangleCircle_down"
+            R.id.triangleDown_down -> "triangleDown_down"
+            R.id.triangleLeft_down -> "triangleLeft_down"
+            R.id.triangleRight_down -> "triangleRight_down"
+
+            // Add more cases for other views
+
+            else -> "Unknown"
+        }
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun onImageViewClicked(imageView: Int) {
 
         val imageView = binding.root.findViewById<ImageView>(imageView)
         // Save the original color
+
+        val clickedViewId: Int = imageView.id
+        val viewName = getViewNameFromId(clickedViewId)
+
+        // Handle the view name, for example, log it
+        Log.d("ClickedViewName", viewName)
+        var (value, control)= extractComponents(viewName)
+
+
+        var inputData = JSONObject().apply {
+            put("control", control)
+            put("value", value)
+        }
+
+        Log.d("RobotCarNewFragment", "Control: $control")
+        Log.d("RobotCarNewFragment", "Value: $value")
+
         imageView.setOnTouchListener { view, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -66,25 +101,86 @@ class RobotCarNewFragment : Fragment() {
                         ContextCompat.getColor(requireContext(), R.color.white),
                         PorterDuff.Mode.SRC_IN
                     )
-                    // api call
+                    Log.d("RobotCarNewFragment", "API Control: $control")
+                    Log.d("RobotCarNewFragment", "API Value: $value")
+                    val apiClient = ApiClient()
+                    val address_robotcar = "$addressRobotCar/api/controls"
+                    apiClient.sendRequest(address_robotcar, "POST", inputData) { response ->
+                        // Handle the API response here
+
+                        Log.d("RobotCarNewFragment", "API Response: $response")
+                        activity?.runOnUiThread {
+                            if (response != "") { // answer is received
+
+                                Log.d("RobotCarNewFragment", "api command sent succesfully")
+//                                Toast.makeText(requireContext(), "Configuration saved succesfully", Toast.LENGTH_SHORT).show()
+
+                            } else {
+                                Log.d("RobotCarNewFragment", "api command not received")
+//                                Toast.makeText(requireContext(), "Configuration NOT saved", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
 
                 }
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                    Log.d("ImageViewClicked", "ACTION_UP or ACTION_CANCEL")
+                    Log.d("RobotCarNewFragment_ImageViewClicked", "ACTION_UP or ACTION_CANCEL")
                     // Revert to the original color when the button is released or canceled
                     (view as ImageView).clearColorFilter()
+                    Log.d("RobotCarNewFragment", "API Control: $control")
+                    Log.d("RobotCarNewFragment", "API Value: $value")
 
                     // Handle the click action
-                    view.performClick()
+                    // api call
+                    // the stop is need only for the motors as the camera are step servos
+                    if(control == "down"){
+                        val apiClient = ApiClient()
+                        val address_robotcar = "$addressRobotCar/api/controls"
+
+
+                        var stopData = JSONObject().apply {
+                            put("control", control)
+                            put("value", value)
+                        }
+
+                        stopData.put("value", "stop")
+
+                        apiClient.sendRequest(address_robotcar, "POST", stopData) { response ->
+                            // Handle the API response here
+
+                            Log.d("RobotCarNewFragment", "API Response: $response")
+                            activity?.runOnUiThread {
+                                if (response != "") { // answer is received
+
+                                    Log.d("RobotCarNewFragment", "api command sent succesfully")
+//                                Toast.makeText(requireContext(), "Configuration saved succesfully", Toast.LENGTH_SHORT).show()
+
+                                } else {
+                                    Log.d("RobotCarNewFragment", "api command not received")
+//                                Toast.makeText(requireContext(), "Configuration NOT saved", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
                 }
-                // api call
             }
             true // Return true to consume the event
         }
         imageView.setOnClickListener {
             // Your click handling logic here
-            Log.d("ImageViewClicked", "Clicked")
+            Log.d("RobotCarNewFragment_ImageViewClicked", "Clicked")
             // This block will be executed when the ImageView is clicked
+        }
+    }
+
+    fun extractComponents(viewName: String): Pair<String, String> {
+        val parts = viewName.removePrefix("triangle").split("_")
+        if (parts.size == 2) {
+            return Pair(parts[0], parts[1])
+        } else {
+            // Handle the case where the string format is not as expected
+            return Pair("Unknown", "Unknown")
         }
     }
     override fun onCreateView(
@@ -151,12 +247,9 @@ class RobotCarNewFragment : Fragment() {
             if (jsonStringConnect != null) {
                 val jsonObject = JSONObject(jsonStringConnect)
                 val robotCarAddress = jsonObject.getString("address")
-                addressRobotCar = "http://$robotCarAddress/api"
+                addressRobotCar = "http://$robotCarAddress"
             }
         }
-
-
-
 
         val sharedPreferences = context?.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         if (sharedPreferences != null){
@@ -166,13 +259,11 @@ class RobotCarNewFragment : Fragment() {
             if(jsonString!= null) {
                 val jsonObject = JSONObject(jsonString)
                 frontCameraIp = jsonObject.getString("front_camera_ip")
+                videoUrl = "http://$frontCameraIp:81/stream"
                 backCameraIp = jsonObject.getString("back_camera_ip")
 
             }
         }
-
-
-
 
 
         // Initialize the Switch
@@ -180,10 +271,13 @@ class RobotCarNewFragment : Fragment() {
         switchButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
 //                videoUrl = "http://192.168.2.235:81/stream"
-                videoUrl = frontCameraIp.toString()
+                var backCameraIpString = backCameraIp.toString()
+                videoUrl = "$backCameraIpString:81/stream"
             } else {
+
 //                videoUrl = "http://192.168.2.235:81/stream"
-                videoUrl = backCameraIp.toString()
+                var frontCameraIpString = frontCameraIp.toString()
+                videoUrl = "$frontCameraIpString:81/stream"
             }
             Log.d("RobotCarFragment", "Switch value changed: $isChecked")
             webView.loadUrl(videoUrl) // Update the video URL in the WebView

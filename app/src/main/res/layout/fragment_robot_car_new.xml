@@ -15,117 +15,118 @@
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/left_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="30dp"
+        android:layout_width="188dp"
+        android:layout_height="304dp"
         android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp">
 
         <ImageView
             android:id="@+id/triangleUp_up"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_up"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:src="@drawable/triangle_up" />
+
         <ImageView
             android:id="@+id/triangleCircle_up"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/circle"
-            android:layout_centerHorizontal="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleUp_up"
-            android:layout_marginTop="2dp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/circle" />
+
         <ImageView
             android:id="@+id/triangleDown_up"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_down"
-            android:layout_centerHorizontal="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleCircle_up"
-            android:layout_marginTop="2dp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/triangle_down" />
 
         <ImageView
             android:id="@+id/triangleLeft_up"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_left"
-            android:layout_toLeftOf="@id/triangleCircle_up"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleUp_up"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="2dp"
-            android:layout_marginTop="2dp"/>
+            android:layout_toLeftOf="@id/triangleCircle_up"
+            android:src="@drawable/triangle_left" />
 
         <ImageView
             android:id="@+id/triangleRight_up"
             android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_right"
-            android:layout_toRightOf="@id/triangleCircle_up"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleUp_up"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/triangleCircle_up"
+            android:src="@drawable/triangle_right" />
     </RelativeLayout>
 
 
-
-
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bottom_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="30dp"
+        android:layout_width="189dp"
+        android:layout_height="304dp"
         android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp">
 
         <ImageView
             android:id="@+id/triangleUp_down"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_up"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:src="@drawable/triangle_up" />
+
         <ImageView
             android:id="@+id/triangleCircle_down"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/circle"
-            android:layout_centerHorizontal="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleUp_down"
-            android:layout_marginTop="2dp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/circle" />
+
         <ImageView
             android:id="@+id/triangleDown_down"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_down"
-            android:layout_centerHorizontal="true"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleCircle_down"
-            android:layout_marginTop="2dp"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/triangle_down" />
 
         <ImageView
             android:id="@+id/triangleLeft_down"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_left"
-            android:layout_toLeftOf="@id/triangleCircle_down"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleUp_down"
+            android:layout_marginTop="2dp"
             android:layout_marginEnd="6dp"
-            android:layout_marginTop="2dp"/>
+            android:layout_toLeftOf="@id/triangleCircle_down"
+            android:src="@drawable/triangle_left" />
 
         <ImageView
             android:id="@+id/triangleRight_down"
             android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:src="@drawable/triangle_right"
-            android:layout_toRightOf="@id/triangleCircle_down"
+            android:layout_height="80dp"
             android:layout_below="@id/triangleUp_down"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/triangleCircle_down"
+            android:src="@drawable/triangle_right" />
     </RelativeLayout>
 
 

@@ -201,7 +201,21 @@ class RobotCarFragment : Fragment(), JoystickView.JoystickListener {
     }
 
     private fun fetchDistanceFromServer() {
-        val apiUrl = "http://192.168.2.46/api/distance" // Replace with your actual API endpoint for distance retrieval
+        var addressRobotCar = ""
+        val connectPref = context?.getSharedPreferences("MyConnect", Context.MODE_PRIVATE)
+        if (connectPref != null){
+            // the file exist so we can load the preferences
+
+            val jsonStringConnect = connectPref?.getString("jsonStringConnect", null)
+            if (jsonStringConnect != null) {
+                val jsonObject = JSONObject(jsonStringConnect)
+                addressRobotCar = jsonObject.getString("address")
+            }
+        }
+
+
+
+        val apiUrl = "http://$addressRobotCar/api/distance" // Replace with your actual API endpoint for distance retrieval
 
         apiClient.sendRequest(apiUrl, "GET") { response ->
             try {
